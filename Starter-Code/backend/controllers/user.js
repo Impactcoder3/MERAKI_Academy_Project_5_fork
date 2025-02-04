@@ -7,7 +7,7 @@ const register = async (req, res) => {
   const { first_name, last_name, email, password, role_id, phone_number } =
     req.body;
   const passwordHashed = await bcrypt.hash(password, salt);
-  const query = `INSERT INTO users (first_name,last_name,email,password,role_id,points,phone_number) VALUES($1 , $2 , $3 , $4,$5,$6,$7)`;
+  const query = `INSERT INTO users (first_name,last_name,email,password,role_id,points,phone_number) VALUES($1 , $7 , $3 , $4,$5,$6,$7)`;
   const data = [
     first_name,
     last_name,
@@ -103,7 +103,7 @@ const createRequest = (req, res) => {
         console.log("c");
       }
       console.log("predicted_price:", predicted_price);
-      const requestQuery = `insert into requests (user_id,category_id,weight,height,length,width,description,predicted_price) values ($1,$2,$3,$4,$5,$6,$7,$8) returning *`;
+      const requestQuery = `insert into requests (user_id,category_id,weight,height,length,width,description,predicted_price) values ($1,$9,$3,$4,$5,$6,$7,$8) returning *`;
       const values = [
         userId,
         category_id,
@@ -240,6 +240,54 @@ const updateRequestById = (req, res) => {
       }
     });
 };
+//addRequestsToOrder/user
+const addRequestByUserId = (req,res)=>{
+
+
+
+}
+const createOrderById = (req,res)=>{
+  const {id} = req.params
+}
+const getALLOrdersById = (req,res)=>{
+  const {id} =req.params
+  pool.query(`SELECT * FROM orders WHERE user_id = ${id}`)
+  .then((result)=>{
+    res.status(201).json({
+      success:true,
+      result : result.rows
+    })
+
+  })
+  .catch((error) => {
+    res.status(500).json({
+      success: false,
+      message: "server error",
+      error: error.message,
+    });
+  });
+
+}
+//getAssignedOrdersById/collector
+const getAssignOrderById = (req,res)=>{
+  const {id} =req.params
+  pool.query(`SELECT * FROM orders WHERE collector_id = ${id}`)
+  .then((result)=>{
+    res.status(201).json({
+      success:true,
+      result : result.rows
+    })
+
+  })
+  .catch((error) => {
+    res.status(500).json({
+      success: false,
+      message: "server error",
+      error: error.message,
+    });
+  });
+
+}
 
 
 
@@ -247,7 +295,7 @@ const updateRequestById = (req, res) => {
 
 
 
-module.exports = { login, register, createRequest, getRequestsById ,updateRequestById};
+module.exports = { login, register, createRequest, getRequestsById ,updateRequestById,addRequestByUserId,getALLOrdersById,getAssignOrderById};
 
 
 
