@@ -66,7 +66,7 @@ const deleteCategoryById = (req, res) => {
       if (result.rowCount !== 0) {
         res.status(200).json({
           success: true,
-          message: `Categiries with id: ${id} deleted successfully`,
+          message: `Categories with id: ${id} deleted successfully`,
         });
       } else {
         throw new Error("Error happened while deleting article");

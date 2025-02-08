@@ -116,83 +116,7 @@ const login = (req, res) => {
 };
 
 
-const createRequest = (req, res) => {
-  const userId = req.token.userId;
 
-  const { category_id, weight, height, length, width, description } = req.body;
-
-  const priceQuery = `
-   select price_per_kg, price_per_dimensions, points_per_kg from category where id=$1
-  `;
-
-  pool
-    .query(priceQuery, [category_id])
-    .then((result) => {
-      const { price_per_kg, price_per_dimensions, points_per_kg } =
-        result.rows[0];
-      console.log(
-        "price_per_kg;",
-        price_per_kg,
-        "price_per_dimensions:",
-        price_per_dimensions,
-        "points_per_kg:",
-        points_per_kg
-      );
-
-      let predicted_price = 0;
-      if (price_per_kg && weight) {
-        predicted_price = weight * price_per_kg;
-        console.log("a");
-      }
-      if (price_per_dimensions && width && height && length) {
-        const volume = width * height * length;
-        console.log("volume:", volume);
-        console.log("b");
-
-        predicted_price = volume * price_per_dimensions;
-      }
-      if (points_per_kg && weight) {
-        predicted_price = weight * points_per_kg;
-        console.log("c");
-      }
-      console.log("predicted_price:", predicted_price);
-      const requestQuery = `insert into requests (user_id,category_id,weight,height,length,width,description,predicted_price) values ($1,$2,$3,$4,$5,$6,$7,$8) returning *`;
-      const values = [
-        userId,
-        category_id,
-        weight,
-        height,
-        length,
-        width,
-        description,
-        predicted_price,
-      ];
-      pool
-        .query(requestQuery, values)
-        .then((result) => {
-          console.log("here");
-          res.status(201).json({
-            success: true,
-            message: "request created successfully",
-            order: result.rows,
-          });
-        })
-        .catch((error) => {
-          res.status(500).json({
-            success: false,
-            message: "Failed to create request",
-            error: error.message,
-          });
-        });
-    })
-    .catch((error) => {
-      res.status(500).json({
-        success: false,
-        message: "server error",
-        error: error.message,
-      });
-    });
-};
 
 const getRequestsById = (req, res) => {
   const userId = req.token.userId;
@@ -520,6 +444,26 @@ const createOrder = (req, res) => {
       });
     });
 };
+const createRequest = (req, res) => {
+  const userId = req.token.userId;
+
+  console.log(userId);
+  
+  const { order_id,category_id,description,weight, length, width, height,predicted_price} = req.body;
+  const query = `INSERT INTO requests (user_id, category_id, weight, length, width,description,order_id,predicted_price,height ) VALUES ($1,$2,$3,$4,$5,$6,$8,$7,$9)`
+  const values = [userId,category_id, weight, length, width, description ,order_id, predicted_price,height]
+  pool.query(query,values)
+  .then((result)=>{
+    res.json(result)
+  })
+  .catch((error)=>{
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+      error: error.message,
+    });
+  })
+}
 
 
 module.exports = {
