@@ -35,11 +35,11 @@ CREATE TABLE requests (
   order_id INTEGER REFERENCES orders(id) ON DELETE CASCADE,
   category_id INTEGER REFERENCES category(id),
   description TEXT,
-  status VARCHAR(20) DEFAULT 'draft', //it will be active once he checkout
-  weight DECIMAL (10,2) 
-  length DECIMAL (10,2)
-  width DECIMAL (10,2)
-  height DECIMAL (10,2)
+  status VARCHAR(20) DEFAULT 'draft',
+  weight DECIMAL (10,2) ,
+  length DECIMAL (10,2),
+  width DECIMAL (10,2),
+  height DECIMAL (10,2),
   predicted_price DECIMAL (10,2),
 );
 

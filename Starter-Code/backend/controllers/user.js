@@ -24,6 +24,7 @@ const register = async (req, res) => {
       res.status(200).json({
         success: true,
         message: "Account created successfully",
+        
       });
     })
     .catch((err) => {
@@ -118,8 +119,30 @@ const login = (req, res) => {
 
 const createRequest = (req, res) => {
   const userId = req.token.userId;
+  const height  = 0 
+  const predicted_price = 0
+  console.log(userId);
+  const { category_id, weight, length, width, description,order_id } = req.body;
+  console.log(category_id, weight, length, width, description ,order_id,height);
+  
+  const query = `INSERT INTO requests (user_id,category_id,weight,length,width,description,order_id,height,predicted_price) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *`
+  const values = [userId,category_id,weight,length,width,description,order_id,height,predicted_price ]
+  pool.query(query,values)
+  .then((result)=>{
+    res.json(result)
+  })
+  .catch((error)=>{
+    console.log(error);
+    
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+      error: error.message,
+    });
+  })
 
-  const { category_id, weight, height, length, width, description } = req.body;
+
+ /*  const { category_id, weight, height, length, width, description } = req.body;
 
   const priceQuery = `
    select price_per_kg, price_per_dimensions, points_per_kg from category where id=$1
@@ -232,7 +255,7 @@ const getRequestsById = (req, res) => {
         message: "Failed to retrieve orders",
         error: error.message,
       });
-    });
+    }); */
 };
 
 const updateRequestById = (req, res) => {
@@ -526,7 +549,7 @@ module.exports = {
   login,
   register,
   createRequest,
-  getRequestsById,
+
   updateRequestById,
   cancelOrderById,
   getALLOrdersById,

@@ -5,15 +5,13 @@ const {
   login,
   register,
   createRequest,
-  getRequestsById,
+  
   updateRequestById,
   cancelOrderById,
   getALLOrdersById,
   getAssignOrderById,
   cancelRequestById,
-  assignOrderByCollectorId
-
-  getAssignOrderById ,
+  
   createOrder
 
 } = require("../controllers/user");
@@ -24,7 +22,7 @@ userRouter.post("/register", register);
 userRouter.post("/login", login);
 userRouter.post("/createRequestByuserId", authentication, createRequest);
 userRouter.put("/updateRequestById/:id", authentication, updateRequestById);
-userRouter.get("/getRequestByuserId", authentication,getRequestsById);
+/* userRouter.get("/getRequestByuserId", authentication,getRequestsById); */
 userRouter.put("/cancelOrderById/:id",cancelOrderById);
 
 userRouter.get("/getOrderById", getALLOrdersById);//user
