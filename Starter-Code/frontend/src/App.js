@@ -27,11 +27,12 @@ const App = () => {
  
 
     
-    <Routes>
-      <Route path="/copper" element={<Copper/>} />
+    
   <>
+  
   <Navbar/>
   <Routes>
+  <Route path="/copper" element={<Copper/>} />
       <Route path={"/register"} element={<Register />} />
       <Route path={"/"} element={<Login />} />
       <Route path={"/admin"} element={<AdminDash />} />
@@ -43,7 +44,7 @@ const App = () => {
       <Route path="/currentCategory" element={<CurrentCategory/>}/>
       <Route path="/AllRequest" element= {<GetAllRequest/>}/>
       <Route path="/getAllOrderById" element={<GetOrder/>} />
- 
+
     
 
       <Route path="/currentCategory" element={<CurrentCategory/>}/>
