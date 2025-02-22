@@ -36,7 +36,7 @@ const UserCategory = () => {
             >
               <img className="categoryImg card-img-top" src={ele.image} style={{height:"250px",width:"100%"}} />
               <div>
-              <h2 className="title-1 card-title" style={{width:"100%"}}>{ele.category_name}</h2>
+              <p className="title-1 card-title" style={{width:"100%"}}>{ele.category_name}</p>
               <p className="description-1 card-text" style={{width:"100%"}}>{ele.description}</p>
               </div>
               <button

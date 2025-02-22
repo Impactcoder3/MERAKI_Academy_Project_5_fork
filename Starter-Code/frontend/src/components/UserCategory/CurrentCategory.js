@@ -260,7 +260,7 @@ const style= {color:"green"}
               >
                 ✔
               </span>{" "}
-              <span class="ml-2">But them in their container</span>
+              <span class="ml-2">Put them in their container</span>
             </li>
             <li class="flex items-center">
               <span
@@ -278,7 +278,7 @@ const style= {color:"green"}
               >
                 ✔
               </span>{" "}
-              <span class="ml-2">then create your request </span>
+              <span class="ml-2">Then create your request </span>
             </li>
             <li class="flex items-center">
               <span
@@ -302,7 +302,7 @@ const style= {color:"green"}
             </li>
           </ul>
           <h2 className="price p2"  style={{fontSize:"1.5rem"}} >
-            total Price: <span  style={{backgroundColor:"white" ,color:"#0E1D40" ,width:"30%"}}>{" "}
+            Total Price: <span  style={{backgroundColor:"white" ,color:"#0E1D40" ,width:"30%"}}>{" "}
             {
               request.weight &&
                 request.weight *
